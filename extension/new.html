@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Classroom Tools</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <script src="tailwind.js"></script>
+    <script src="tailwind.config.js"></script>
+</head>
+
+<body class="w-[800px] h-[600px] bg-sky-50 text-slate-950 border-2">
+    <div class="flex h-full w-full">
+        <div class="flex flex-col h-full w-1/6">
+            <div class="h-1/4 bg-sky-700 border-gray-700 border-2">
+                <span class="h-1/2">
+                    <img class="aspect-square object-scale-down" src="/assets/imgs/wheel.png" />
+                    <p class="text-center">Student Picker</p>
+                </span>
+            </div>
+            <div class="h-1/4  rounded-none bg-sky-700 border-gray-700 border-2">
+                <span class="h-1/2">
+                    <img class="aspect-square object-scale-down" src="/assets/imgs/group.png" />
+                    <p class="text-center">Group Gen</p>
+                </span>
+            </div>
+            <div class="h-1/4 bg-sky-700 border-gray-700 border-2">
+                <span class="h-1/2">
+                    <img class="aspect-square object-scale-down" src="/assets/imgs/sound.png" />
+                    <p class="text-center">Soundboard</p>
+                </span>
+            </div>
+            <div class="h-1/4 bg-sky-700 border-gray-700 border-2">
+                <span class="h-1/2">
+                    <img class="aspect-square object-scale-down" src="/assets/imgs/home.png" />
+                    <p class="text-center">Home</p>
+                </span>
+            </div>
+        </div>
+        <!--Home Pane-->
+        <!--modify hidden to flex later and do some .js-->
+        <div id="home" class="grow flex flex-col h-full w-full">
+            <div class=" flex flex-col w-full border-b-4">
+                <strong class="text-5xl text-center"> Classroom Tools </strong>
+            </div>
+            <button type="button"
+                class="h-1/2 w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Most
+                Recently Used Tool</button>
+            <button type="button"
+                class="h-1/2 w-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Second
+                Most Recently Used Tool</button>
+        </div>
+        <!--Student Picker Pane-->
+        <!--modify hidden to flex later and do some .js-->
+        <div id="studentTool" class="grow hidden flex-col h-full w-full ">
+            <strong class="text-3xl text-center"> Student Picker </strong>
+            <div class="pt-8"></div>
+            <img src="/assets/imgs/defaultAvatar.jpg" class="mx-auto" id="studentImage" height="200px" width="150px">
+            <label class="text-center" id="nameLabel"> John Doe</label>
+            <div class="flex flex-row w-full h-1/4 justify-center items-center">
+                <button id=" nextButton"
+                class="w-1/4 h-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                New Student</button>
+                <button id="periodButton"
+                    class="w-1/4 h-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    . period</button>
+            </div>
+            <div class="flex flex-row w-full h-1/4 justify-center items-center">
+                <button id=" nextButton"
+                class="w-1/4 h-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                Bad</button>
+                <button id="periodButton"
+                    class="w-1/4 h-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Good</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Pane
+            <div id="loadPane">
+                <strong id="titleLabel">Student Picker</strong>
+                <button id="loadButton">Select Student</button>
+            </div>
+
+             Calling Pane
+            <div id="mainPane">
+
+                <img src="" id="studentImage" height="200px" width="150px">
+                <label id="nameLabel">Sample Name</label>
+
+                <button id="nextButton">Next Name</button>
+                <button id="stopButton">Stop Calling</button>
+            </div> -->
+    </div>
+
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
