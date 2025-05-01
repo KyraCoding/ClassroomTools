@@ -10,6 +10,10 @@ export class UI {
         return new UI(document.createElement(name));
     }
 
+    static svg(name) {
+        return new UI(document.createElementNS("http://www.w3.org/2000/svg", name));
+    }
+
     /**
      * Specifies ID of element
      * @param  {string} x 
@@ -26,7 +30,7 @@ export class UI {
      * @returns {UI}
      */
     clz(x) {
-        this.dom.className = x;
+        this.dom.classList.add(...x.split(" "));
         return this;
     }
 
