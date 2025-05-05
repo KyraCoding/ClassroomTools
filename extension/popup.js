@@ -5,23 +5,26 @@ let mainPane = document.getElementById("mainPane");
 let nameLabel = document.getElementById("nameLabel");
 let nextButton = document.getElementById("nextButton");
 let stopButton = document.getElementById("stopButton");
+let badButton = document.getElementById("badButton");
+let goodButton = document.getElementById("goodButton");
 let studentImage = document.getElementById("studentImage");
 
+// Data Arrays
 let studentNames = [];
 let studentPortraitURLs = [];
 let called = [];
+let studentWeights = [];
+let currentStudentIndex = -1;
 
-// Extension receives message from injected script
-chrome.runtime.onMessage.addListener(
-    function(request) {
-        studentNames = request.names;
-        studentPortraitURLs = request.URLs;
-        called.length = studentNames.length;
-        called.fill(false);
-        console.log("Data recieved");
-        startCalling();
-    }
-);
+// Receive message from injected script
+chrome.runtime.onMessage.addListener(function(request) {
+    studentNames = request.names;
+    studentPortraitURLs = request.URLs;
+    called = new Array(studentNames.length).fill(false);
+    studentWeights = new Array(studentNames.length).fill(1); // Initialize weights
+    console.log("Data received");
+    startCalling();
+});
 
 // Inject script into Synergy
 loadButton.addEventListener("click", async () => {
@@ -33,58 +36,72 @@ loadButton.addEventListener("click", async () => {
     });
 });
 
+// Select next student
 nextButton.addEventListener("click", async () => {
-    rand = generate();
-    nameLabel.innerText = studentNames[rand];
-    studentImage.src = studentPortraitURLs[rand];
+    currentStudentIndex = generateWeighted();
+    nameLabel.innerText = studentNames[currentStudentIndex];
+    studentImage.src = studentPortraitURLs[currentStudentIndex];
 });
 
+// Close popup
 stopButton.addEventListener("click", async () => {
     window.close();
 });
 
+// Penalize bad behavior
+badButton.addEventListener("click", () => {
+    if (currentStudentIndex >= 0) {
+        studentWeights[currentStudentIndex] += 0.5;
+    }
+});
+
+// Reward good behavior
+goodButton.addEventListener("click", () => {
+    if (currentStudentIndex >= 0) {
+        studentWeights[currentStudentIndex] = Math.max(1, studentWeights[currentStudentIndex] - 0.25);
+    }
+});
+
 // Main function
 function startCalling() {
-
     console.log("Calling Started");
-
-    for (let i = 0; i < 3; i++) {
-        console.log(studentPortraitURLs[i]);
-    }
 
     loadPane.style.display = "none";
     mainPane.style.display = "block";
 
-    let rand = generate();
-    nameLabel.innerText = studentNames[rand];
-    studentImage.src = studentPortraitURLs[rand];
-
+    currentStudentIndex = generateWeighted();
+    nameLabel.innerText = studentNames[currentStudentIndex];
+    studentImage.src = studentPortraitURLs[currentStudentIndex];
 }
 
-// Function to generate a name
-function generate() {
-
-    let rand;
-    let flag = true;
-
-    for (let i = 0; i < called.length; i++) {
-        if (!called[i]) {
-            flag = false;
-            break;
-        }
-    }
-
-    if (flag) 
+// Weighted selection function
+function generateWeighted() {
+    // Reset called list if all students have been called
+    if (called.every(v => v)) {
         called.fill(false);
+    }
 
-    while (true) {
-        rand = Math.floor((Math.random() * studentNames.length));
-        if (!called[rand]) {
-            break;
+    // Create weight map excluding already-called students
+    let totalWeight = 0;
+    let weightMap = [];
+
+    for (let i = 0; i < studentWeights.length; i++) {
+        if (!called[i]) {
+            totalWeight += studentWeights[i];
+            weightMap.push({ index: i, weight: studentWeights[i] });
         }
     }
 
-    called[rand] = true;
-    return rand;
-    
+    let randWeight = Math.random() * totalWeight;
+    let cumulative = 0;
+
+    for (let i = 0; i < weightMap.length; i++) {
+        cumulative += weightMap[i].weight;
+        if (randWeight < cumulative) {
+            called[weightMap[i].index] = true;
+            return weightMap[i].index;
+        }
+    }
+
+    return 0; // Fallback
 }
