@@ -9,8 +9,8 @@ export const Students = {
     load(_state) {
         const test = UI.tag("div");
         chrome.runtime.onMessage.addListener(function(request) {
-            studentNames = request.names;
-            studentPortraitURLs = request.URLs;
+            const studentNames = request.names;
+            const studentPortraitURLs = request.URLs;
             const called = new Array(studentNames.length).fill(false);
             const studentWeights = new Array(studentNames.length).fill(1); // Initialize weights
             console.log("Data received");
