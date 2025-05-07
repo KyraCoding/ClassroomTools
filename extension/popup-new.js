@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 */
 
 import { Apps } from "./apps/exports.js";
+import { Storage } from "./storage.js";
 import { UI } from "./ui.js";
 
 /* 
@@ -67,7 +68,7 @@ console.log("[debug] num of apps:", APP_COUNT);
 function createTabButton(title, icon) {
     return UI.tag("div").clz(`h-1/${APP_COUNT} bg-sky-700 border-gray-700 border-2`).sub(
         UI.tag("span").cls("h-1/2").sub(
-            UI.tag("img").clz("aspect-square object-scale-down").attr("src", icon),
+            UI.tag("img").clz("aspect-square object-scale-down h-1/2").attr("src", icon),
             UI.tag("p").cls("text-center").sub(title)
         )
     );
@@ -77,6 +78,8 @@ const tabPane = UI.tag("div").clz("flex flex-col h-full w-1/6");
 for (const [i, app] of Apps.entries()) {
     const tabButton = createTabButton(app.name(), `/assets/imgs/${app.icon()}`);
     tabButton.on("click", () => {
+        Storage.lastApp = i;
+        Storage.save("lastApp");
         loadApp(i);
     });
     tabPane.add(tabButton);
@@ -92,6 +95,11 @@ function loadApp(i) {
 const body = new UI(document.body);
 body.add(tabPane, appFrame);
 
-loadApp(APP_COUNT - 1);
+function getLastApp() {
+    const last = Storage.lastApp;
+    return (last === -1) ? (APP_COUNT - 1) : last;
+}
+
+loadApp(getLastApp());
 
 
