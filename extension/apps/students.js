@@ -89,7 +89,9 @@ export const Students = {
         root.add(dropdown, load, clear);
         (async () => {
             const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
-            if (tab.url !== INJECT_TARGET) {
+            /** @type {string} */
+            const url = tab.url;
+            if (url.indexOf(INJECT_TARGET) === -1) {
                 load.dom.textContent = "Load (Synergy only)";
                 load.attr("disabled", "");
                 return;
