@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(function(request) {
     // const called = new Array(studentNames.length).fill(false);
     // const studentWeights = new Array(studentNames.length).fill(1); // Initialize weights
     console.log("Data received");
-    const period = "4A";
+    const period = dropdown.dom.value;
     const data = { names: studentNames, urls: studentPortraitURLs }
     Storage.students[period] = data;
     loadStudents(period, data);
@@ -66,6 +66,10 @@ function loadStudents(period, data) {
     Storage.save("students");
 }
 
+const dropdown = createDropdown(periods);
+const load = UI.tag("button").sub("Load");
+const clear = UI.tag("button").sub("Clear");
+
 export const Students = {
     name() { return "Student Manager"; },
     icon() { return null; },
@@ -79,9 +83,6 @@ export const Students = {
             root.add(studentContainers[period]);
         }
 
-        const dropdown = createDropdown(periods);
-        const load = UI.tag("button").sub("Load");
-        const clear = UI.tag("button").sub("Clear");
         clear.on("click", () => {
             const period = dropdown.dom.value;
             loadStudents(period, undefined);
