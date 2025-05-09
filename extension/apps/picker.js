@@ -75,12 +75,11 @@ export const Picker = {
                             createDropdownList("Period 4A"),
                             createDropdownList("Period 4B"),
                             createDropdownList("Period 5"),
-                            createDropdownList("Period 5"),
                             createDropdownList("Period 6")
                         )
                 )
             ,
-            UI.tag("div").clz("pt-8"),
+            UI.tag("div").clz("pt-14"),
             UI.tag("img").clz("mx-auto").id("studentImage").attr("src", "/assets/imgs/defaultAvatar.jpg").attr("height", "200px").attr("width", "150px"),
             UI.tag("label").clz("text-center pt-4").id("nameLabel").sub("John Doe"),
             UI.tag("div").clz("flex flex-row w-full h-1/4 justify-center items-center").sub(

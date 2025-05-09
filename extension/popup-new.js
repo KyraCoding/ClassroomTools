@@ -66,9 +66,9 @@ const APP_COUNT = Apps.length;
 console.log("[debug] num of apps:", APP_COUNT);
 
 function createTabButton(title, icon) {
-    return UI.tag("div").clz(`h-1/${APP_COUNT} bg-sky-700 border-gray-700 border-2`).sub(
-        UI.tag("span").cls("h-1/2").sub(
-            UI.tag("img").clz("aspect-square object-scale-down h-1/2").attr("src", icon),
+    return UI.tag("div").clz(`flex h-1/${APP_COUNT} bg-sky-700 border-gray-700 border-2 justify-center items-center`).sub(
+        UI.tag("span").cls("h-1/2", "flex", "flex-col", "justify-center", "items-center").sub(
+            UI.tag("img").clz("grow aspect-square object-scale-down h-1/2").attr("src", icon),
             UI.tag("p").cls("text-center").sub(title)
         )
     );
