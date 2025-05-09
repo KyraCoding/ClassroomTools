@@ -53,10 +53,16 @@ function createDropdownList(period) {
     return listItem;
 }
 
+const svgPath = "m384 32h-320c-35.35 0-64 28.65-64 64v320c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64v-320c0-35.35-28.65-64-64-64zm-256 352c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm0-192c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm96 96c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm96 96c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm0-192c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32z";
 
 export const Picker = {
     name() { return "Student Picker"; },
     icon() { return "wheel.png"; },
+    svg() {
+        return UI.svg("svg").attr("viewBox", "0 0 448 512").sub(
+            UI.svg("path").attr("d", svgPath)
+        );
+    },
     load(_state) {
         return UI.tag("div").clz("grow relative flex flex-col h-full w-full").sub(
             UI.tag("strong").clz("text-3xl text-center").sub("Student Picker"),

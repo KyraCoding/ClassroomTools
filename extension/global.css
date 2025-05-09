@@ -1,0 +1,39 @@
+.ct-button {
+    border-radius: 500px; /* For capsule shape */
+
+}
+
+.ct-tab-icon {
+    border-radius: 0.1rem;
+    width: 0.4rem;
+    height: 0.4rem;
+    
+}
+
+.ct-tab-pane {
+    background-color: #3b2e2a;
+}
+
+.ct-tab-button {
+    background-color: #4e3a32;
+    color: #c8c9db;
+    font-weight: bold;
+    transition: background-color 0.2s ease-out;
+}
+
+.ct-tab-button.active {
+    background-color: #684d42;
+    color: #e69f67;
+}
+
+.ct-tab-button svg {
+    fill: #c8c9db;
+}
+
+.ct-tab-button.active svg {
+    fill: #e69f67;
+}
+
+.ct-tab-button:hover {
+    background-color: #684d42;
+}

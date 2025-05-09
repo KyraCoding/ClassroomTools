@@ -65,18 +65,33 @@ import { UI } from "./ui.js";
 const APP_COUNT = Apps.length;
 console.log("[debug] num of apps:", APP_COUNT);
 
-function createTabButton(title, icon) {
-    return UI.tag("div").clz(`flex h-1/${APP_COUNT} bg-sky-700 border-gray-700 border-2 justify-center items-center`).sub(
+function createTabButton(title, {type, icon}) {
+    return UI.tag("div").clz(`ct-tab-button flex grow h-1/${APP_COUNT} bg-sky-700 border-gray-700 border-0 m-1 box-content justify-center items-center rounded-lg`).sub(
         UI.tag("span").cls("h-1/2", "flex", "flex-col", "justify-center", "items-center").sub(
-            UI.tag("img").clz("grow aspect-square object-scale-down h-1/2").attr("src", icon),
+            type === "svg" ?
+                icon
+                : UI.tag("img").clz("grow aspect-square object-scale-down w-1/2").attr("src", icon),
             UI.tag("p").cls("text-center").sub(title)
         )
     );
 }
 
-const tabPane = UI.tag("div").clz("flex flex-col h-full w-1/6");
+/** @type {UI[]} */
+const tabButtons = [];
+const tabPane = UI.tag("div").clz("ct-tab-pane flex flex-col h-full w-1/6 select-none");
 for (const [i, app] of Apps.entries()) {
-    const tabButton = createTabButton(app.name(), `/assets/imgs/${app.icon()}`);
+    let type, icon;
+    if (app.svg !== undefined) {
+        type = "svg";
+        icon = app.svg();
+    }
+    else {
+        type = "bmp";
+        icon = `/assets/imgs/${app.icon()}`;
+    }
+    const tabButton = createTabButton(app.name(), {type, icon});
+    
+    tabButtons[i] = tabButton;
     tabButton.on("click", () => {
         Storage.lastApp = i;
         Storage.save("lastApp");
@@ -87,7 +102,11 @@ for (const [i, app] of Apps.entries()) {
 
 const appFrame = UI.tag("div").clz("h-full w-5/6");
 
+let currentApp = Storage.lastApp || 0;
 function loadApp(i) {
+    tabButtons[currentApp].dom.classList.remove("active");
+    tabButtons[i].dom.classList.add("active");
+    currentApp = i;
     appFrame.dom.textContent = "";
     appFrame.add(Apps[i].load(null));
 }
