@@ -11,19 +11,22 @@ let studentWeights = {};
 let studentData = {};
 
 function initPeriod(period) {
+    console.log(Storage.students, period)
     studentData = Storage.students[period] || { names: [], urls: [] };
-    called = Array(studentData.length).fill(false);
-    studentWeights[period] = studentWeights[period] || studentData.map(() => 1);
+    called = Array(studentData.names.length).fill(false);
+    studentWeights[period] = studentWeights[period] || studentData.names.map(() => 1);
 }
 
 function getStudent({ names, urls }, index) {
+    console.log("getting")
+    console.log(names, urls);
     return { name: names[index], url: urls[index] };
 }
 
 // Weighted random selection
 function generateWeighted(period) {
     const weights = studentWeights[period];
-    const students = studentData;
+    const students = studentData.names;
 
     if (called.every(v => v)) called.fill(false);
 
@@ -53,9 +56,12 @@ function generateWeighted(period) {
 
 function pickNewStudent() {
     currentStudentIndex = generateWeighted(currentPeriod);
-    const student = studentData[currentStudentIndex];
-    nameLabel.innerText = student.name;
+    const student = getStudent(studentData, currentStudentIndex);
+    console.log(student)
+    nameLabel.dom.innerText = student.name;
     studentImage.src = student.url;
+    console.log("here")
+    console.log(student);
 }
 
 function markBehavior(good = true) {
@@ -100,6 +106,9 @@ function createDropdownButton() {
     return button;
 }
 
+function _tmpFixPeriod(period) {
+    return period.split(" ")[1];
+}
 
 function createDropdownList(period) {
     const listItem = UI.tag("li");
@@ -113,10 +122,13 @@ function createDropdownList(period) {
         const dropdown = document.getElementById("dropdown");
 
         button.firstChild.textContent = period;
+        
+        const p = _tmpFixPeriod(period);
+
         dropdown.classList.add("hidden");
 
-        currentPeriod = period;
-        initPeriod(period);
+        currentPeriod = p;
+        initPeriod(p);
         pickNewStudent();
     });
 
