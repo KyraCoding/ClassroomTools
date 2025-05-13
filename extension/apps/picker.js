@@ -11,9 +11,13 @@ let studentWeights = {};
 let studentData = {};
 
 function initPeriod(period) {
-    studentData = Storage.students[period] || [];
+    studentData = Storage.students[period] || { names: [], urls: [] };
     called = Array(studentData.length).fill(false);
     studentWeights[period] = studentWeights[period] || studentData.map(() => 1);
+}
+
+function getStudent({ names, urls }, index) {
+    return { name: names[index], url: urls[index] };
 }
 
 // Weighted random selection
