@@ -64,6 +64,7 @@ import { UI } from "./ui.js";
 
 const APP_COUNT = Apps.length;
 console.log("[debug] num of apps:", APP_COUNT);
+let currentApp = -1;
 
 function createTabButton(title, {type, icon}) {
     return UI.tag("div").clz(`ct-tab-button flex grow h-1/${APP_COUNT} bg-sky-700 border-gray-700 border-0 m-1 box-content justify-center items-center rounded-lg`).sub(
@@ -101,10 +102,8 @@ for (const [i, app] of Apps.entries()) {
 }
 
 const appFrame = UI.tag("div").clz("h-full w-5/6");
-
-let currentApp = Storage.lastApp || 0;
 function loadApp(i) {
-    tabButtons[currentApp].dom.classList.remove("active");
+    if (currentApp !== -1) tabButtons[currentApp].dom.classList.remove("active");
     tabButtons[i].dom.classList.add("active");
     currentApp = i;
     appFrame.dom.textContent = "";
