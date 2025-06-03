@@ -27,16 +27,9 @@ function createAudioButton({ name, file, color }) {
     return elem;
 }
 
-const svgPath = "m470.38 1.51-319.97 94.49a32 32 0 0 0 -22.41 30.51v261.41a139 139 0 0 0 -32-3.92c-53 0-96 28.66-96 64s43 64 96 64 96-28.66 96-64v-233.68l256-75v184.61a138.4 138.4 0 0 0 -32-3.93c-53 0-96 28.66-96 64s43 64 96 64 96-28.65 96-64v-352a32 32 0 0 0 -41.62-30.49z";
-
 export const Soundboard = {
     name() { return "Sound Board"; },
     icon() { return "sound.png"; },
-    svg() {
-        return UI.svg("svg").attr("viewBox", "0 0 512 512").sub(
-            UI.svg("path").attr("d", svgPath).attr("fill-rule", "evenodd")
-        );
-    },
     load(_state) {
         const container = UI.tag("div")
             .id("sb-list")
