@@ -11,29 +11,30 @@
 }
 
 .ct-tab-pane {
-    background-color: #3b2e2a;
+    background-color: var(--tab-pane-bg);
 }
 
 .ct-tab-button {
-    background-color: #4e3a32;
-    color: #c8c9db;
+    background-color: var(--tab-button-bg);
+    color: var(--tab-button-text);
     font-weight: bold;
     transition: background-color 0.2s ease-out;
+    cursor: pointer;
 }
 
 .ct-tab-button.active {
-    background-color: #684d42;
-    color: #e69f67;
+    background-color: var(--tab-button-bg-active);
+    color: var(--tab-button-text-active);
 }
 
 .ct-tab-button svg {
-    fill: #c8c9db;
+    fill: var(--tab-button-text);
 }
 
 .ct-tab-button.active svg {
-    fill: #e69f67;
+    fill: var(--tab-button-text-active);
 }
 
 .ct-tab-button:hover {
-    background-color: #684d42;
+    background-color: var(--tab-button-bg-active);
 }

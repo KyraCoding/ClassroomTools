@@ -1,0 +1,7 @@
+:root {
+    --tab-pane-bg: #3b2e2a;
+    --tab-button-bg: #4e3a32;
+    --tab-button-text: #c8c9db;
+    --tab-button-bg-active: #684d42;
+    --tab-button-text-active: #e69f67;
+}
