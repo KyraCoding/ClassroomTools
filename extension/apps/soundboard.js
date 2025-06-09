@@ -6,24 +6,17 @@ const audios = [
 ];
 
 function createAudioButton({ name, file, color }) {
-    const bgColor = color === "green" ? "bg-green-100" : "bg-red-100"
-    const borderColor = color === "green" ? "border-green-700" : "border-red-700";
-    const hoverBorderColor = color === "green" ? "hover:border-green-500" : "hover:border-red-500";
-    const textColor = color === "green" ? "text-green-700" : "text-red-700";
-    const hoverTextColor = color === "green" ? "hover:text-green-500" : "hover:text-red-500"
-    const elem = UI.tag("div")
-        .cls("flex", "flex-col", "justify-center", 
-            "items-center", "border-2", borderColor, 
-            hoverBorderColor, "rounded-lg", 
-            bgColor, "text-lg", "font-bold", 
-            textColor, hoverTextColor, 
-            "p-8", "w-full", "h-full", "cursor-pointer", "transition-all")
-        .sub(name)
+    const bgColor = color === "green" ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600";
+    
+    const elem = UI.tag("button")
+        .clz(`px-8 py-6 ${bgColor} text-white font-semibold text-xl rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer w-full min-h-[80px]`)
+        .sub(name);
     
     const audio = new Audio(`assets/audio/${file}`);
-    elem.on("click",() => {
-        audio.play()
+    elem.on("click", () => {
+        audio.play();
     });
+    
     return elem;
 }
 
@@ -38,17 +31,19 @@ export const Soundboard = {
         );
     },
     load(_state) {
-        const container = UI.tag("div")
-            .id("sb-list")
-            .cls("flex", "flex-col", "gap-4", "w-full", "h-full")
-        
-        for (const info of audios) {
-            container.add(createAudioButton(info));
-        }
-
         return UI.tag("div")
-            .cls("flex", "w-full", "h-full", "py-4", "justify-center")
-            .sub(container)
+            .clz("min-h-screen bg-gray-50 flex flex-col p-6")
+            .sub(
+                UI.tag("h1").clz("text-4xl font-bold text-gray-800 text-center mb-8").sub("Sound Board"),
+                
+                UI.tag("div")
+                    .clz("flex-1 flex flex-col justify-center items-center max-w-md mx-auto w-full")
+                    .sub(
+                        UI.tag("div")
+                            .id("sb-list")
+                            .clz("flex flex-col gap-4 w-full")
+                            .sub(...audios.map(info => createAudioButton(info)))
+                    )
+            );
     }
-
-}
+};

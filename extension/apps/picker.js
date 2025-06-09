@@ -78,25 +78,9 @@ function markBehavior(good = true) {
 function createDropdownButton() {
     const button = UI.tag("button")
         .id("dropdownButton")
-        .clz("absolute top-8 right-8 w-1/4 flex flex-row justify-between items-center border-2 border-black-700 hover:border-blue-700 rounded-lg bg-gray-100 text-sm font-semibold text-black-700 hover:text-blue-700 p-4 cursor-pointer transition-all")
+        .clz("absolute top-6 right-6 px-4 py-2 bg-white border-2 border-gray-300 hover:border-blue-500 rounded-lg text-gray-700 hover:text-blue-600 font-medium shadow-sm hover:shadow-md transition-all cursor-pointer")
         .attr("type", "button")
-        .sub(
-            "Period",
-            UI.svg("svg")
-                .clz("w-2.5 h-2.5 ms-3")
-                .attr("aria-hidden", "true")
-                .attr("xmlns", "http://www.w3.org/2000/svg")
-                .attr("fill", "none")
-                .attr("viewBox", "0 0 10 6")
-                .sub(
-                    UI.svg("path")
-                        .attr("stroke", "currentColor")
-                        .attr("stroke-linecap", "round")
-                        .attr("stroke-linejoin", "round")
-                        .attr("stroke-width", "2")
-                        .attr("d", "m1 1 4 4 4-4")
-                )
-        );
+        .sub(currentPeriod + " ▼");
 
     button.on("click", () => {
         const dropdown = document.getElementById("dropdown");
@@ -113,15 +97,16 @@ function _tmpFixPeriod(period) {
 function createDropdownList(period) {
     const listItem = UI.tag("li");
     const link = UI.tag("a")
-        .clz("block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white")
+        .clz("block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 cursor-pointer")
         .attr("href", "#")
         .sub(period);
 
     link.on("click", (e) => {
+        e.preventDefault();
         const button = document.getElementById("dropdownButton");
         const dropdown = document.getElementById("dropdown");
 
-        button.firstChild.textContent = period;
+        button.dom.textContent = period + " ▼";
         
         const p = _tmpFixPeriod(period);
 
@@ -135,7 +120,6 @@ function createDropdownList(period) {
     listItem.sub(link);
     return listItem;
 }
-
 
 const periods = Object.keys(Storage.students);
 
@@ -152,68 +136,77 @@ export const Picker = {
     load(_state) {
         loadPane = document.getElementById("loadPane");
         mainPane = document.getElementById("mainPane");
-        nameLabel = UI.tag("label").clz("text-center pt-4").id("nameLabel").sub("John Doe");
-        nextButton = UI.tag("div").id("nextButton").cls("flex", "flex-col", "justify-center",
-        "items-center", "border-2", "border-black-700",
-        "hover:border-blue-700", "rounded-lg",
-        "bg-gray-100", "text-sm", "font-semibold",
-        "text-black-700", "hover:text-blue-700",
-        "p-4", "min-w-[100px]", "cursor-pointer", "transition-all").sub("New Student");
+        
+        nameLabel = UI.tag("h2")
+            .clz("text-3xl font-bold text-center py-6 text-gray-800")
+            .id("nameLabel")
+            .sub("Select a Student");
+
+        nextButton = UI.tag("button")
+            .id("nextButton")
+            .clz("px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer min-w-[150px]")
+            .sub("New Student");
 
         nextButton.on("click", pickNewStudent);
-        badButton = UI.tag("div").id("badButton").cls("flex", "flex-col", "justify-center",
-        "items-center", "border-2", "border-black-700",
-        "hover:border-blue-700", "rounded-lg",
-        "bg-gray-100", "text-sm", "font-semibold",
-        "text-black-700", "hover:text-blue-700",
-        "p-4", "min-w-[100px]", "cursor-pointer", "transition-all").sub("Bad");
+
+        badButton = UI.tag("button")
+            .id("badButton")
+            .clz("px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer min-w-[100px]")
+            .sub("Bad");
 
         badButton.on("click", () => markBehavior(false));
-        goodButton = UI.tag("div").id("goodButton").cls("flex", "flex-col", "justify-center",
-        "items-center", "border-2", "border-black-700",
-        "hover:border-blue-700", "rounded-lg",
-        "bg-gray-100", "text-sm", "font-semibold",
-        "text-black-700", "hover:text-blue-700",
-        "p-4", "min-w-[100px]", "cursor-pointer", "transition-all").sub("Good");
+
+        goodButton = UI.tag("button")
+            .id("goodButton")
+            .clz("px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer min-w-[100px]")
+            .sub("Good");
+            
         goodButton.on("click", () => markBehavior(true));
 
-        studentImage = UI.tag("img").clz("mx-auto").id("studentImage").attr("src", "/assets/imgs/defaultAvatar.jpg").attr("height", "200px").attr("width", "150px");
+        studentImage = UI.tag("img")
+            .clz("mx-auto rounded-lg shadow-lg border-2 border-gray-200")
+            .id("studentImage")
+            .attr("src", "/assets/imgs/defaultAvatar.jpg")
+            .attr("height", "200px")
+            .attr("width", "150px");
 
         initPeriod(currentPeriod);
 
-        return UI.tag("div").clz("grow relative flex flex-col h-full w-full").sub(
-            UI.tag("strong").clz("text-3xl text-center").sub("Student Picker"),
-            createDropdownButton(),
-            UI.tag("div")
-                .id("dropdown")
-                .clz("absolute inset-x-94 top-22 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700")
-                .sub(
-                    UI.tag("ul")
-                        .clz("py-2 text-sm text-gray-700 dark:text-gray-200")
-                        .attr("aria-labelledby", "dropdownButton")
-                        .sub(
-                            createDropdownList("Period 1"),
-                            createDropdownList("Period 2"),
-                            createDropdownList("Period 3"),
-                            createDropdownList("Period 4A"),
-                            createDropdownList("Period 4B"),
-                            createDropdownList("Period 5"),
-                            createDropdownList("Period 6")
-                        )
+        return UI.tag("div")
+            .clz("min-h-screen bg-gray-50 relative flex flex-col p-6")
+            .sub(
+                UI.tag("div").clz("flex justify-between items-center mb-8").sub(
+                    UI.tag("h1").clz("text-4xl font-bold text-gray-800").sub("Student Picker"),
+                    createDropdownButton()
+                ),
+                
+                UI.tag("div")
+                    .id("dropdown")
+                    .clz("absolute top-20 right-6 z-10 hidden bg-white border border-gray-200 rounded-lg shadow-lg min-w-[160px]")
+                    .sub(
+                        UI.tag("ul")
+                            .clz("py-2")
+                            .attr("aria-labelledby", "dropdownButton")
+                            .sub(
+                                createDropdownList("Period 1"),
+                                createDropdownList("Period 2"),
+                                createDropdownList("Period 3"),
+                                createDropdownList("Period 4A"),
+                                createDropdownList("Period 4B"),
+                                createDropdownList("Period 5"),
+                                createDropdownList("Period 6")
+                            )
+                    ),
+                
+                UI.tag("div").clz("flex-1 flex flex-col items-center justify-center space-y-8").sub(
+                    studentImage,
+                    nameLabel,
+                    nextButton,
+                    UI.tag("div").clz("flex gap-4 items-center").sub(
+                        badButton,
+                        goodButton
+                    )
                 )
-            ,
-            UI.tag("div").clz("pt-14"),
-            studentImage,
-            nameLabel,
-            UI.tag("div").clz("flex flex-row w-full h-1/4 justify-center items-center").sub(
-                nextButton,
-
-            ),
-            UI.tag("div").clz("flex flex-row w-full h-1/4 justify-center items-center").sub(
-                badButton,
-                goodButton
-            )
-        );
+            );
     }
 };
-
