@@ -59,7 +59,7 @@ function pickNewStudent() {
     const student = getStudent(studentData, currentStudentIndex);
     console.log(student)
     nameLabel.dom.innerText = student.name;
-    studentImage.src = student.url;
+    studentImage.attr("src", student.url || "/assets/imgs/defaultAvatar.jpg");
     console.log("here")
     console.log(student);
 }
@@ -106,7 +106,7 @@ function createDropdownList(period) {
         const button = document.getElementById("dropdownButton");
         const dropdown = document.getElementById("dropdown");
 
-        button.dom.textContent = period + " ▼";
+        button.textContent = period + " ▼";
         
         const p = _tmpFixPeriod(period);
 
