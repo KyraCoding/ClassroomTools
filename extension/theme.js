@@ -1,3 +1,5 @@
+import { Storage } from "./storage.js";
+
 const list = [
     "default",
     "rust",
@@ -12,5 +14,9 @@ export const Theme = {
     },
     set(name) {
         style.setAttribute("href", `themes/${name}.css`);
+        Storage.theme = name;
+        Storage.save("theme");
     }
 };
+
+Theme.set(Storage.theme);

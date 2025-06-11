@@ -1,6 +1,7 @@
 const keys = [
     "lastApp",
-    "students"
+    "students",
+    "theme"
 ];
 
 function toStorageKey(key) {
@@ -10,6 +11,7 @@ function toStorageKey(key) {
 export const Storage = {
     lastApp: -1,
     students: {},
+    theme: "default",
     save(key) {
         if (key === "save") return;
         const stringified = JSON.stringify(this[key]);
