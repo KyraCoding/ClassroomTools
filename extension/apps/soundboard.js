@@ -34,7 +34,7 @@ export const Soundboard = {
         return UI.tag("div")
             .clz("min-h-screen bg-gray-50 flex flex-col p-6")
             .sub(
-                UI.tag("h1").clz("text-4xl font-bold text-gray-800 text-center mb-8").sub("Sound Board"),
+                UI.tag("h1").clz("text-4xl font-bold text-gray-800 text-left mb-8").sub("Sound Board"),
                 
                 UI.tag("div")
                     .clz("flex-1 flex flex-col justify-center items-center max-w-md mx-auto w-full")
