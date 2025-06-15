@@ -27,7 +27,7 @@ function createTabButton(title, {type, icon}) {
 
 /** @type {UI[]} */
 const tabButtons = [];
-const tabPane = UI.tag("div").clz("ct-tab-pane flex flex-col h-full w-1/6 select-none sticky");
+const tabPane = UI.tag("div").clz("ct-tab-pane flex flex-col h-full w-1/6 select-none");
 for (const [i, app] of Apps.entries()) {
     let type, icon;
     if (app.svg !== undefined) {
@@ -42,6 +42,7 @@ for (const [i, app] of Apps.entries()) {
     
     tabButtons[i] = tabButton;
     tabButton.on("click", () => {
+        if (Storage.lastApp === i) return;
         Storage.lastApp = i;
         Storage.save("lastApp");
         loadApp(i);
@@ -49,7 +50,7 @@ for (const [i, app] of Apps.entries()) {
     tabPane.add(tabButton);
 }
 
-const appFrame = UI.tag("div").clz("h-full w-5/6");
+const appFrame = UI.tag("div").clz("h-full w-5/6 o overflow-y-auto");
 function loadApp(i) {
     if (currentApp !== -1) tabButtons[currentApp].dom.classList.remove("active");
     tabButtons[i].dom.classList.add("active");
