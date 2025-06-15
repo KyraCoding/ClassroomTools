@@ -5,9 +5,9 @@ import { Home } from "./home.js";
 import { Students } from "./students.js";
 
 export const Apps = [
-    Soundboard,
+    Students,
     Picker,
     Group,
-    Students,
+    Soundboard,
     Home
 ];
