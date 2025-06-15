@@ -1,21 +1,31 @@
 const keys = [
     "lastApp",
     "students",
-    "theme"
+    "theme",
+    "period",
+    "groups",
+    "groupsMethod"
 ];
 
 function toStorageKey(key) {
     return `storage:${key}`;
 }
 
+function saveOne(key) {
+    if (key === "save") return;
+    const stringified = JSON.stringify(Storage[key]);
+    localStorage.setItem(toStorageKey(key), stringified);
+}
+
 export const Storage = {
     lastApp: -1,
     students: {},
     theme: "default",
-    save(key) {
-        if (key === "save") return;
-        const stringified = JSON.stringify(this[key]);
-        localStorage.setItem(toStorageKey(key), stringified);
+    period: "1",
+    groups: {},
+    groupsMethod: {},
+    save(...keys) {
+        keys.forEach(saveOne);
     }
 };
 
