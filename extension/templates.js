@@ -61,6 +61,19 @@ function select(list, callback, options = {}) {
     return { button, dropdown };
 }
 
+/**
+ * 
+ * @param {string} text 
+ * @param {string} color 
+ * @returns {UI}
+ */
+export function button(text, color) {
+    return UI.tag("button").clz(
+        `disabled:hover:bg-gray-500 disabled:hover:cursor-not-allowed bg-${color}-500 hover:bg-${color}-600 p-2 rounded-lg text-white font-bold cursor-pointer select-none`,
+    ).attr("type", "button").sub(text);
+}
+
 export const TP = {
     select,
+    button
 };
