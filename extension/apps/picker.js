@@ -23,7 +23,7 @@ function initComponents() {
     components.next = UI.tag("button")
         .id("nextButton")
         .clz(
-            "px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer min-w-[150px]",
+            "px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer min-w-[150px] select-none",
         )
         .sub("New Student");
 
@@ -48,7 +48,7 @@ function initComponents() {
     components.good.on("click", () => markBehavior(true));
 
     components.image = UI.tag("img")
-        .clz("mx-auto rounded-lg shadow-lg border-2 border-gray-200")
+        .clz("mx-auto rounded-lg shadow-lg border-2 border-gray-200 w-auto h-50")
         .id("studentImage")
         .attr("src", "/assets/imgs/defaultAvatar.jpg")
         .attr("height", "200px")
