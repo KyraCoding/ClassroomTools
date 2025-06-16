@@ -57,6 +57,13 @@ export class UI {
     }
 
     /**
+     * Clears this element
+     */
+    clear() {
+        this.dom.textContent = "";
+    }
+
+    /**
      * Adds a child element
      * @param  {...any} elements
      */
@@ -70,9 +77,11 @@ export class UI {
      * Adds event listener
      * @param {string} event 
      * @param {EventListenerOrEventListenerObject} listener 
+     * @returns {UI}
      */
     on(event, listener) {
         this.dom.addEventListener(event, listener);
+        return this;
     }
 
     /**
