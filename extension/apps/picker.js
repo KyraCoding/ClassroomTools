@@ -77,7 +77,7 @@ function loadComponents() {
 //     goodButton,
 //     studentImage;
 
-let currentPeriod = Storage.period;
+// let currentPerod = Storage.period;
 let currentStudentIndex = -1;
 let called = [];
 let studentWeights = {};
@@ -146,7 +146,7 @@ function generateWeighted(period) {
 }
 
 function pickNewStudent() {
-    currentStudentIndex = generateWeighted(currentPeriod);
+    currentStudentIndex = generateWeighted(Storage.period);
     const student = getStudent(studentData, currentStudentIndex);
     console.log(student);
     components.name.dom.textContent = student.name;
@@ -157,7 +157,7 @@ function pickNewStudent() {
 
 function markBehavior(good = true) {
     if (currentStudentIndex >= 0) {
-        const weights = studentWeights[currentPeriod];
+        const weights = studentWeights[Storage.period];
         if (good) {
             weights[currentStudentIndex] = Math.max(
                 1,
@@ -203,7 +203,6 @@ export const Picker = {
                 value: period,
             })),
             (period) => {
-                currentPeriod = period;
                 initComponents();
                 switchPeriod(period);
                 // pickNewStudent();
