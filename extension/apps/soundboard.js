@@ -9,7 +9,7 @@ function createAudioButton({ name, file, color }) {
     const bgColor = color === "green" ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600";
     
     const elem = UI.tag("button")
-        .clz(`px-8 py-6 ${bgColor} text-white font-semibold text-xl rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer w-full min-h-[80px]`)
+        .clz(`px-8 py-6 ${bgColor} text-white font-semibold text-xl rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer w-full min-h-[80px] select-none`)
         .sub(name);
     
     const audio = new Audio(`assets/audio/${file}`);
