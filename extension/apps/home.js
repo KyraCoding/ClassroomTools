@@ -19,7 +19,9 @@ function cap(name) {
 }
 
 function header(title) {
-    return UI.tag("h3").clz("text-lg font-bold border-b-2 border-gray-300").sub(title);
+    return UI.tag("h3").clz("text-lg font-bold border-b-2 border-gray-300").sub(
+        title,
+    );
 }
 
 function paragraph(...text) {
@@ -31,11 +33,15 @@ function vspace() {
 }
 
 function list(...items) {
-    return UI.tag("ul").clz("list-disc list-inside text-base").sub(...items.map(item => UI.tag("li").sub(item)));
+    return UI.tag("ul").clz("list-disc list-inside text-base").sub(
+        ...items.map((item) => UI.tag("li").sub(item)),
+    );
 }
 
 function link(title, url) {
-    const res =  UI.tag("a").clz("underline text-blue-600 hover:text-blue-800 visited:text-purple-600").attr("href", url).sub(title);
+    const res = UI.tag("a").clz(
+        "underline text-blue-600 hover:text-blue-800 visited:text-purple-600",
+    ).attr("href", url).sub(title);
     res.on("click", () => {
         chrome.tabs.create({ url });
     });
@@ -66,41 +72,53 @@ export const Home = {
             { defaultTitle: cap(Storage.theme) },
         );
 
-        return UI.tag("div").clz("grow flex flex-col p-6").sub(
+        return UI.tag("div").clz("relative grow flex flex-col p-6").sub(
             // UI.tag("div").clz("flex flex-col w-full border-b-4").sub(
             //     UI.tag("strong").clz("text-5xl text-center").sub(
             //         "Classroom Tools",
             //     ),
             // ),
-            UI.tag("h1").clz("text-4xl font-bold text-gray-800 text-left mb-8").sub("Home"),
-            selection.dropdown,
+            UI.tag("h1").clz("text-4xl font-bold text-gray-800 text-left mb-8")
+                .sub("Home"),
             selection.button,
+            selection.dropdown,
             // UI.tag("button").clz(buttonStyle).sub("Recently Used Tool"),
             // UI.tag("button").clz(buttonStyle).sub("Most Recently Used Tool"),
             paragraph("Hello and welcome to Classroom Tools!"),
             vspace(),
             header("Getting Started"),
-            paragraph("On the left side bar, there are multiple different apps with the goal of making classroom-related tasks more convenient. Give them a try!"),
+            paragraph(
+                "On the left side bar, there are multiple different apps with the goal of making classroom-related tasks more convenient. Give them a try!",
+            ),
             vspace(),
             header("Custom Themes"),
-            paragraph("In case you don't like the default colors, use the dropdown menu on this page to change the theme of this extension."),
+            paragraph(
+                "In case you don't like the default colors, use the dropdown menu on this page to change the theme of this extension.",
+            ),
             vspace(),
             header("About"),
-            paragraph("This extension was created for the Advanced Object Oriented Design class by the following students:"),
+            paragraph(
+                "This extension was created for the Advanced Object Oriented Design class by the following students:",
+            ),
             list(
                 "Oliver (Team lead)",
                 "Barry (UI)",
                 "Christian (UI + Styling)",
                 "Kai (Logic + Project structure)",
-                "Nolan (Styling)"
+                "Nolan (Styling)",
             ),
             vspace(),
             header("Source Code"),
-            paragraph("The full repo is available on ", link("GitHub", REPO_LINK), "."),
+            paragraph(
+                "The full repo is available on ",
+                link("GitHub", REPO_LINK),
+                ".",
+            ),
             vspace(),
             header("Bug Report"),
-            paragraph("If you encounter any bugs, either email Mr. Hobson (michael_hobson@hcpss.org) or create a GitHub issue. We will try our best to fix it quickly.")
-            
+            paragraph(
+                "If you encounter any bugs, either email Mr. Hobson (michael_hobson@hcpss.org) or create a GitHub issue. We will try our best to fix it quickly.",
+            ),
         );
     },
 };
